@@ -12,22 +12,64 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.sematec.weather.CustomTextViewVazir
-            android:id="@+id/txtNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:layout_gravity="center_horizontal"
 
-            />
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="#00BCD4"
+            >
+            <com.sematec.weather.CustomTextViewVazir
+                android:id="@+id/txtLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginBottom="30dp"
+                android:text="تهران"/>
+            <com.sematec.weather.CustomTextViewVazir
+                android:id="@+id/txtTodayTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text="25"/>
 
-        <fragment
-            android:id="@+id/fragmentViewFiveDay"
-            android:name="fragmentFiveDays"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgTodayStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                
+                />
+            <com.sematec.weather.CustomTextViewVazir
+                android:id="@+id/txtTodayStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginBottom="30dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerForecast"
+                android:layout_gravity="center">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout android:layoutDirection="rtl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
+
+        <com.sematec.weather.CustomTextViewVazir
+            android:id="@+id/txtday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="right"
+            android:text="روز"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgStatus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
+            />
+
+        <com.sematec.weather.CustomTextViewVazir
+            android:id="@+id/txtmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="کمینه "/>
+        <com.sematec.weather.CustomTextViewVazir
+            android:id="@+id/txtmax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="بیشینه "/>
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

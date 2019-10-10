@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sematec.weather.forecast.WeatherClass;
+import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONArray;
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseHandler dbHandler=new DatabaseHandler(MainActivity.this,"WeatherDB",null,1);
         final RecyclerView recycler=findViewById(R.id.recycler);
         final EditText edtCity=findViewById(R.id.edtSearch);
-        final TextView txtNum=findViewById(R.id.txtNum);
 
         //dbHandler.ClearCityHistory();
 
@@ -59,15 +60,6 @@ public class MainActivity extends AppCompatActivity {
         RecyclerAdapter adapter=new RecyclerAdapter(lstCity);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
-
-        String test="134567890244";
-        String test2=convertNumber(test);
-
-        txtNum.setText(test2);
-
-
-
-
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +92,21 @@ public class MainActivity extends AppCompatActivity {
                 recycler.setAdapter(adapter);
                 recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
 
-                ArrayList<myWeatherClass> lstWeather=FillWeatherData();
+               // ArrayList<myWeatherClass> lstWeather=new ArrayList<myWeatherClass>();
+                //lstWeather= FillWeatherData();
+
+               // Log.d("jsontest","weather list size is "+ lstWeather.size());
+
+                FillWeatherData();
+
+
+
+
+                //TextView txtTodayTemp=findViewById(R.id.txtTodayTemp);
+                //txtTodayTemp.setText(convertNumber(lstWeather.get(0).getTemp()));
+
+                //ImageView imgTodayStatus=findViewById(R.id.imgTodayStatus);
+               // Picasso.get().load("http://openweathermap.org/img/wn/" + lstWeather.get(0).getIcon() + "@2x.png").into(imgTodayStatus);
 
 
 
@@ -123,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<myWeatherClass> FillWeatherData()
+    public void FillWeatherData()
     {
-        Log.d("test","We are in FillWeatherData method");
-        final ArrayList<myWeatherClass> lstWeather=new ArrayList<>();
+        Log.d("jsontest","We are in FillWeatherData method");
+        final ArrayList<myWeatherClass> lstWeather=new ArrayList<myWeatherClass>();
 
         EditText edtCity=findViewById(R.id.edtSearch);
         AsyncHttpClient client = new AsyncHttpClient();
-        String strCity=edtCity.getText().toString();
+        //String strCity=edtCity.getText().toString();
         String url="http://api.openweathermap.org/data/2.5/forecast?lang=fa&units=metric&q=Tehran&APPID=cb86e30c50a504dc52083199743e8646";
 
         try {
@@ -139,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             client.get(url, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.d("jsontest","We are in onSuccess method");
 
 //                    Gson gson = new Gson();
 //                    WeatherClass weatherClass = gson.fromJson(response.toString(), WeatherClass.class);
@@ -148,16 +155,38 @@ public class MainActivity extends AppCompatActivity {
                     //index: in Json there is a forecast for  every 3 hour
                     //today
                    lstWeather.add(getDataFromJson(0,response.toString(),0));
+                    Log.d("jsontest","list size is "+ lstWeather.size());
                     //tomorrow
                    lstWeather.add(getDataFromJson(8,response.toString(),1));
+                    Log.d("jsontest","list size is "+ lstWeather.size());
                     //day2
                    lstWeather.add(getDataFromJson(16,response.toString(),2));
+                    Log.d("jsontest","list size is "+ lstWeather.size());
                    //day3
                    lstWeather.add(getDataFromJson(24,response.toString(),3));
                    //day4
                    lstWeather.add(getDataFromJson(32,response.toString(),4));
                    //day5
                    lstWeather.add(getDataFromJson(39,response.toString(),5));
+                    Log.d("jsontest","list size is "+ lstWeather.size());
+
+                    TextView txtTodayTemp=findViewById(R.id.txtTodayTemp);
+                    txtTodayTemp.setText(convertNumber(lstWeather.get(0).getTemp()));
+
+                    ImageView imgTodayStatus=findViewById(R.id.imgTodayStatus);
+                    String url="http://openweathermap.org/img/wn/" + lstWeather.get(0).getIcon() + "@2x.png";
+                    Log.d("jsontest",url);
+                     Picasso.get().load(url).into(imgTodayStatus);
+
+                    TextView txtTodayStatus=findViewById(R.id.txtTodayStatus);
+                    txtTodayStatus.setText(lstWeather.get(0).getDescription());
+
+                    RecyclerView forecastRecycler=findViewById(R.id.recyclerForecast);
+                    forecastRecyclerAdapter forecastAdapter=new forecastRecyclerAdapter(lstWeather);
+                    forecastRecycler.setAdapter(forecastAdapter);
+                    forecastRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
+
+
 
 
                 }
@@ -171,11 +200,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception e){
-            Log.d("test", e.getMessage());
+            Log.d("jsontest","We are in catch");
+            Log.d("jsontest", e.getMessage());
 
         }
 
-        return lstWeather;
+        //return lstWeather;
     }
 
     //
@@ -220,10 +250,13 @@ public class MainActivity extends AppCompatActivity {
 
         String item0_icon=todayWeatherobj.getString("icon");// weather icon
         //Log.d("jsontest",item0_icon);
+        myWeather.setIcon(item0_icon);
 
         String item0_wind=item0.getString("wind");
         JSONObject item0_windSpeed=new JSONObject(item0_wind);
         String item0_speed=item0_windSpeed.getString("speed");// wind speed
+        myWeather.setwindSpeed(item0_speed);
+
         } catch (JSONException e) {
             Log.d("jsontest","Error in fetch info of Item"+index+" from JSON");
             e.printStackTrace();
@@ -269,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         int today=calendar.get(Calendar.DAY_OF_WEEK);
         int day=(today+numberOfDayFromToday)%7;
         switch (day) {
-            case Calendar.SATURDAY:
+            case 0:
                 return "شنبه";
             case Calendar.SUNDAY:
                 return "یکشنبه";
