@@ -53,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
         final EditText edtCity=findViewById(R.id.edtSearch);
         final TextView txtError=findViewById(R.id.txtError);
         final DatabaseHandler dbHandler=new DatabaseHandler(MainActivity.this,"WeatherDB",null,1);
+        final Button btnMenu=findViewById(R.id.btnMenu);
 
         //dbHandler.ClearCityHistory();
+
 
         txtError.setText("");
 
@@ -66,6 +68,20 @@ public class MainActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
 
         FillWeatherData("تهران");
+
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    myDrawer.openDrawer(GravityCompat.END);
+                }
+                catch (Exception e){
+                   Log.d("myweather",e.getMessage()) ;
+                }
+
+
+            }
+        });
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void FillWeatherData(final String cityName)
     {
-        //final boolean result=true;
+
         Log.d("jsontest","We are in FillWeatherData method");
         final ArrayList<myWeatherClass> lstWeather=new ArrayList<myWeatherClass>();
         final TextView txtCity=findViewById(R.id.txtLocation);
@@ -126,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             AsyncHttpClient client = new AsyncHttpClient();
-            //String strCity=edtCity.getText().toString();
-            //String url="http://api.openweathermap.org/data/2.5/forecast?lang=fa&units=metric&q=Tehran&APPID=cb86e30c50a504dc52083199743e8646";
+
             String url = "http://api.openweathermap.org/data/2.5/forecast?lang=fa&units=metric&q=" + cityName + "&APPID=cb86e30c50a504dc52083199743e8646";
 
             try {
@@ -162,10 +177,6 @@ public class MainActivity extends AppCompatActivity {
                         TextView txtTodayTemp = findViewById(R.id.txtTodayTemp);
                         txtTodayTemp.setText(convertNumber(lstWeather.get(0).getTemp())+"º");
 
-                        /*ImageView imgTodayStatus = findViewById(R.id.imgTodayStatus);
-                        String url = "http://openweathermap.org/img/wn/" + lstWeather.get(0).getIcon() + "@2x.png";
-                        Log.d("jsontest", url);
-                        Picasso.get().load(url).into(imgTodayStatus);*/
 
                         TextView txtTodayStatus = findViewById(R.id.txtTodayStatus);
                         txtTodayStatus.setText(lstWeather.get(0).getDescription());
@@ -204,9 +215,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("jsontest", "FillWeather Data onFailure is called");
                         Log.d("jsontest", throwable.getMessage());
 
-                        Toast.makeText(MainActivity.this, "این شهر وجود ندارد", Toast.LENGTH_LONG).show();
-
-                        if (throwable.getMessage() == "Not Found") {
+                        if (throwable.getMessage().equals("Not Found")) {
                             Log.d("jsontest", "we are in not found");
                             Toast.makeText(MainActivity.this, "این شهر وجود ندارد", Toast.LENGTH_LONG).show();
                         }
@@ -226,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //return result;
+
     }
 
     //
