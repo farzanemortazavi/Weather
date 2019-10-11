@@ -1,5 +1,7 @@
 package com.sematec.weather;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +33,15 @@ public class forecastRecyclerAdapter extends RecyclerView.Adapter<forecastRecycl
     public void onBindViewHolder(@NonNull forecastHolder holder, int position) {
         myWeatherClass forecast= forecastLst.get(position+1);
         holder.txtDay.setText(forecast.getDay());
-        holder.txtMinTemp.setText(convertNumber(forecast.getTempMin()));
-        holder.txtMaxTemp.setText(convertNumber(forecast.getTempMax()));
+        //holder.txtMinTemp.setText(convertNumber(forecast.getTempMin()));
+        holder.txtMaxTemp.setText(convertNumber(forecast.getTempMax())+"º");
+
+        String uri = "@drawable/i" + forecast.getIcon();
+       // String uri = "@drawable/i01d";
+        Context context=holder.imgStatus.getContext();
+        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        Drawable res = context.getResources().getDrawable(imageResource);
+        holder.imgStatus.setImageDrawable(res);
 
     }
 
@@ -43,14 +52,14 @@ public class forecastRecyclerAdapter extends RecyclerView.Adapter<forecastRecycl
 
     class forecastHolder extends RecyclerView.ViewHolder{
         TextView txtDay;
-        TextView txtMinTemp;
+        //TextView txtMinTemp;
         TextView txtMaxTemp;
         ImageView imgStatus;
 
         public forecastHolder(@NonNull View itemView) {
             super(itemView);
             txtDay=itemView.findViewById(R.id.txtday);
-            txtMinTemp=itemView.findViewById(R.id.txtmin);
+            //txtMinTemp=itemView.findViewById(R.id.txtmin);
             txtMaxTemp=itemView.findViewById(R.id.txtmax);
             imgStatus=itemView.findViewById(R.id.imgStatus);
         }

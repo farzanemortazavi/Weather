@@ -14,6 +14,7 @@
 
 
         <LinearLayout
+            android:id="@+id/layoutTop"
           android:layout_width="match_parent"
           android:layout_height="300dp"
           android:orientation="vertical"
@@ -21,19 +22,26 @@
             android:gravity="center"
             android:background="#00BCD4"
             >
+            <com.sematec.weather.CustomTextViewBoldVazir
+                android:id="@+id/txtTodayStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginBottom="30dp"
+                />
             <com.sematec.weather.CustomTextViewVazir
                 android:id="@+id/txtLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:layout_marginBottom="30dp"
-                android:text="تهران"/>
-            <com.sematec.weather.CustomTextViewVazir
+                />
+            <com.sematec.weather.CustomTextViewBlackVazir
                 android:id="@+id/txtTodayTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="25"/>
+                android:textSize="35sp"
+                />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgTodayStatus"
@@ -45,13 +53,7 @@
                 android:layout_marginTop="10dp"
                 
                 />
-            <com.sematec.weather.CustomTextViewVazir
-                android:id="@+id/txtTodayStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_marginBottom="30dp"
-                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -81,16 +83,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginTop="20dp"
+
         >
 
         <ImageButton
             android:id="@+id/btnSearch"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:scaleType="fitCenter"
             android:background="@drawable/search"
@@ -99,12 +102,24 @@
         <com.sematec.weather.CustomEditTextVazi
             android:id="@+id/edtSearch"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
             android:gravity="center"
-            android:textSize="15sp"
-            android:hint="نام شهر را وارد کنید"/>
+            android:textSize="18sp"
+            android:hint="نام شهر را وارد کنید"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/rounded_edittext"
+            />
+
+        <com.sematec.weather.CustomTextViewVazir
+            android:id="@+id/txtError"
+            android:textColor="#FF00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            />
 
 
 
