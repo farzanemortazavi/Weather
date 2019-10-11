@@ -63,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
         ArrayList lstCity= new ArrayList<String>();
         lstCity=dbHandler.GetCityList();
 
-        RecyclerAdapter adapter=new RecyclerAdapter(lstCity);
+        RecyclerAdapter adapter=new RecyclerAdapter(lstCity, new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String item) {
+                FillWeatherData(item);
+                myDrawer.closeDrawer(GravityCompat.END);
+            }
+        });
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
 
@@ -109,7 +115,13 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList lstCity= new ArrayList<String>();
                 lstCity=dbHandler.GetCityList();
 
-                RecyclerAdapter adapter=new RecyclerAdapter(lstCity);
+                RecyclerAdapter adapter=new RecyclerAdapter(lstCity, new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(String item) {
+                        FillWeatherData(item);
+                        myDrawer.closeDrawer(GravityCompat.END);
+                    }
+                });
                 recycler.setAdapter(adapter);
                 recycler.setLayoutManager(new LinearLayoutManager(MainActivity.this,RecyclerView.VERTICAL,false));
 

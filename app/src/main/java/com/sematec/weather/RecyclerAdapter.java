@@ -3,6 +3,7 @@ package com.sematec.weather;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,16 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder> {
     ArrayList<String> menuLst;
-    RecyclerAdapter(ArrayList<String> lst){
-        menuLst=lst;
 
+    public interface OnItemClickListener {
+        void onItemClick(String item);
+    }
+    private final OnItemClickListener listener;
+
+
+    RecyclerAdapter(ArrayList<String> lst,OnItemClickListener clickListener ){
+        menuLst=lst;
+        listener=clickListener;
     }
 
 
@@ -29,8 +37,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+
         String name= menuLst.get(position);
         holder.txtCity.setText(name);
+
+        holder.bind(name,listener);
+
+
     }
 
     @Override
@@ -44,6 +57,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         public Holder(@NonNull View itemView) {
             super(itemView);
             txtCity=itemView.findViewById(R.id.txtRecyclerItem);
+        }
+
+        public void bind(final String item, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 }
